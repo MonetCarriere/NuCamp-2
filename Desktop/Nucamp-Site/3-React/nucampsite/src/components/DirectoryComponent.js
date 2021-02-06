@@ -1,50 +1,40 @@
-import React, {Component} from 'react';
-import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
-import CampsiteInfo from './CampsiteInfoComponent.js';
+import React from 'react';
+import {Card, CardImg, CardImgOverlay, CardTitle} from 'reactstrap';
+
+{/*This is a Presentational Component because it renders UI based on props passed to it from the main component and doesn't manage it's own state*/}
+{/*a.k.a Skinny, Dumb, Stateless */}
 
 
-class Directory extends Component{
-    constructor(props){
-        super(props);
-            this.state = {
-                selectedCampsite: null
-            } ;      
-    }
+function RenderDirectoryItem({campsite}) {
+    return (
+        <Card>
+            <CardImg width="100%" src={campsite.image} alt={campsite.name} />
+            <CardImgOverlay>
+                <CardTitle>{campsite.name}</CardTitle>
+            </CardImgOverlay>
+        </Card>
+    );
+}
 
-  
+function Directory(props) {
 
-    onCampsiteSelect(campsite){
-        this.setState({selectedCampsite: campsite});
-    }
-
-    render() {
-        const directory = this.props.campsites.map(campsite => {
-            return (
-                <div key={campsite.id} className="col-md-5 m-1">
-                    <Card onClick={() => this.onCampsiteSelect(campsite)}>
-                        <CardImg src={campsite.image} alt={campsite.name} />
-                        <CardImgOverlay/>
-                            <CardTitle>{campsite.name}</CardTitle>
-                        <CardImgOverlay/>
-                    </Card>
-                </div>
-            );
-        });
-
+    const directory = props.campsites.map(campsite => {
         return (
-            <div className="container">
-                <div className="row">
-                    {directory}
-                </div>
-                <CampsiteInfo campsite={this.state.selectedCampsite}/>
+            <div key={campsite.id} className="col-md-5 m-1">
+                <RenderDirectoryItem campsite={campsite}/>
             </div>
         );
-    }
+    });
+
+    return (
+        <div className="container">
+            <div className="row">
+                {directory}
+            </div>
+        </div>
+    );
 }
 
 export default Directory;
-
-
-
 
 
