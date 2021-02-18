@@ -1,11 +1,48 @@
 import React from 'react';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Loading } from './LoadingComponent';
+
+
+
+function RenderCard({item, isLoading, errMess}) {           //Here what we want to do is show the loading component if you're still loading data, the error message if you've failed to get the data and only render the data if we have it
+    if (isLoading) {
+        return <Loading />;
+    }
+    if (errMess) {
+        return <h4>{errMess}</h4>;
+    }
+    return (
+        <Card>
+            <CardImg src={item.image} alt={item.name} />
+            <CardBody>
+                <CardTitle>{item.name}</CardTitle>
+                <CardText>{item.description}</CardText>
+            </CardBody>
+        </Card>
+    );
+}
+
 
 function Home(props) {
     return (
         <div className="container">
-            <h4>Home</h4>
+            <div className="row">
+                <div className="col-md m-1">
+                    <RenderCard 
+                        item={props.campsite}
+                        isLoading={props.campsitesLoading}
+                        errMess={props.campsitesErrMess}
+                    />
+                </div>
+                <div className="col-md m-1">
+                    <RenderCard item={props.promotion} />
+                </div>
+                <div className="col-md m-1">
+                    <RenderCard item={props.partner} />
+                </div>
+            </div>
         </div>
     );
 }
 
-export default Home; 
+export default Home;  

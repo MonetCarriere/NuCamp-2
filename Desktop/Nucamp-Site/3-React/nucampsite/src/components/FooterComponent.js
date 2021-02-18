@@ -34,4 +34,3 @@ function Footer(props) {
 
 export default Footer;
 
-<Link to='./home'>Home</Link>
